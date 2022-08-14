@@ -10,13 +10,19 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
   web:
     build: ./backend/
-    command: python ./backend/manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python ./backend/manage.py migrate &&
+             python ./backend/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
