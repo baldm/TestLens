@@ -31,12 +31,12 @@ router.register(r'groups', views.GroupViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
+        title="TestLens API",
         default_version='v1',
-        description="Test description",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@snippets.local"),
-        license=openapi.License(name="BSD License"),
+        description="API for the TestLens service",
+        terms_of_service="",
+        contact=openapi.Contact(email=""),
+        license=openapi.License(name="MIT License"),
     ),
     public=True,
     permission_classes=[permissions.AllowAny],
