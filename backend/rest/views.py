@@ -2,9 +2,11 @@ from django.contrib.auth.models import User, Group
 
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+
 
 from .models import Project
 from .serializers import UserSerializer, GroupSerializer, ProjectSerializer
@@ -28,19 +30,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-@api_view(['GET', 'POST'])
-def project_list(request):
-    """
-    List all projects, or create a new project.
-    """
-    if request.method == 'GET':
-        projects = Project.objects.all()
-        serializer = ProjectSerializer(projects, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = ProjectSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class Projects(generics.ListCreateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
