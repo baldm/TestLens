@@ -1,11 +1,8 @@
 from django.contrib.auth.models import User, Group
 
-from rest_framework import status
 from rest_framework import viewsets
 from rest_framework import generics
 from rest_framework import permissions
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
 
 
 from .models import Project
@@ -30,7 +27,13 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class Projects(generics.ListCreateAPIView):
+class ProjectsView(generics.ListCreateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = [permissions.IsAuthenticated]
