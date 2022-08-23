@@ -5,8 +5,8 @@ from rest_framework import generics
 from rest_framework import permissions
 
 
-from .models import Project
-from .serializers import UserSerializer, GroupSerializer, ProjectSerializer
+from .models import Project, TestCase, TestSet, Environment, TestExecution
+from .serializers import UserSerializer, GroupSerializer, ProjectSerializer, TestSetSerializer, TestCaseSerializer, EnvironmentSerializer, TestExecutionSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -27,13 +27,31 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class ProjectsView(generics.ListCreateAPIView):
+class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
-class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
+class TestSetViewSet(viewsets.ModelViewSet):
+    queryset = TestSet.objects.all()
+    serializer_class = TestSetSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class TestCaseViewSet(viewsets.ModelViewSet):
+    queryset = TestCase.objects.all()
+    serializer_class = TestCaseSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class EnvironmentViewSet(viewsets.ModelViewSet):
+    queryset = Environment.objects.all()
+    serializer_class = EnvironmentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class TestExecutionViewSet(viewsets.ModelViewSet):
+    queryset = TestExecution.objects.all()
+    serializer_class = TestExecutionSerializer
     permission_classes = [permissions.IsAuthenticated]

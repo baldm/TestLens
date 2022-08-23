@@ -27,6 +27,11 @@ from drf_yasg import openapi
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
+router.register(r'projects', views.ProjectViewSet)
+router.register(r'test_sets', views.TestSetViewSet)
+router.register(r'test_cases', views.TestCaseViewSet)
+router.register(r'environments', views.EnvironmentViewSet)
+router.register(r'test_executions', views.TestExecutionViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -46,8 +51,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('projects/', views.ProjectsView.as_view(), name='projects'),
-    path('projects/<int:pk>/', views.ProjectDetailView.as_view(), name='projects'),
+
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger',
